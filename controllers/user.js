@@ -9,8 +9,8 @@ const userCreation = (req, res) => {
     if (!username || !password) {
       return res.status(403).json({ message: "required all fields" });
     }
-    const findUser = "select * from backendusers";
-    db.query(findUser, async (err, result) => {
+    const findUser = "select * from backendusers where username=?";
+    db.query(findUser, [username], async (err, result) => {
       if (err) {
         return res.status(404).json({ message: "error to get user" });
       }
@@ -50,7 +50,7 @@ const userLogin = (req, res) => {
       if (err) {
         return res.status(403).json({ message: "Error to check username" });
       }
-      if (result.affectedRows === 0) {
+      if (result.length === 0) {
         return res.status(404).json({ message: "user doesn't exist" });
       }
       const comaparePsw = await bcrypt.compare(password, result[0].password);
