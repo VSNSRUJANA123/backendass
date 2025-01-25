@@ -1,4 +1,4 @@
-# Project Overview
+# **Project Overview**
 
 - create user table and customer table using mysql
 - implement one to many relationship between user and customer
